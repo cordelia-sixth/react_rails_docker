@@ -18,3 +18,13 @@ services:
       - ./api:/usr/src/app
     # コンテナ起動時に実行させる
     command: ['rails', 's', '-b', '0.0.0.0']
+  
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+    ports: 
+      - '8000:8080'
+    volumes: 
+      - ./front:/usr/src/app
+    command: ['npm', 'run', 'dev']
