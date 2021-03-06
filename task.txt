@@ -1,4 +1,0 @@
-rails apiを作成
-  Dockerfile
-  docker-compose.yml
-  
