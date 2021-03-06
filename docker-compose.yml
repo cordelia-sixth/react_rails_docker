@@ -1,0 +1,20 @@
+version: '3'
+services:
+  api:
+    build:
+      # 使用するDockerfileが置いてあるディレクトリを指定する
+      context: ./api/
+      # Dockerfileの名前を指定する
+      dockerfile: Dockerfile
+    # ホストのport3000からコンテナのport3000へアクセスできるようにする
+    # DockerfileでもEXPORTを指定する必要がある
+    ports:
+      - '3000:3000'
+    # コンテナを起動し続ける
+    tty: true
+    #　ホストとコンテナのディレクトリをマウントする
+    # このdocker-compose.ymlがある場所からの相対パスを指定する
+    volumes:
+      - ./api:/usr/src/app
+    # コンテナ起動時に実行させる
+    command: ['rails', 's', '-b', '0.0.0.0']
