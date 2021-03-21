@@ -1,47 +1,37 @@
-const HtmlwebpackPlugin = require('html-webpack-plugin')
+const path = require("path");
 
 module.exports = {
-  mode: "development",
-  entry: "./src/index.jsx",
-
-  // // bundle fileの格納先を指定
-  // output: {
-  //   path: path.resolve(__dirname, 'dist'),
-  //   filename: 'bundle.js'
-  // },
-
-  // webpack-dev-serverの設定
-  devServer: {
-    compress: true, // ファイルを圧縮する
-    hot: true,
-    host: '0.0.0.0', // hostを指定する
-    port: 8080 //　待ち受けportを指定する
-  },
-
-  module: {
-    rules: [
-      // {
-      //   test: /\.tsx?$/,
-      //   use: "ts-loader"
-      // },
-      {
-        test: /\.jsx$/,
+    mode: 'development',
+    entry: path.resolve(__dirname, "src/index.jsx"),
+    output: {
+      filename: 'bundle.js',
+      path: path.join(__dirname, "dist")
+    },
+    devServer: {
+        compress: true,
+        contentBase: path.join(__dirname, "dist"),
+        watchContentBase: true,
+        hot: true,
+        port: 8080,
+    },
+    module: {
+      rules: [{
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
-      }
-    ]
-  },
-
-  plugins: [
-    new HtmlwebpackPlugin({
-        template: './src/index.html'
-    })
-  ],
-
-  // import分でファイルを指定する時に拡張子を省略する
-  resolve: {
-    extensions: [
-      ".js", ".jsx"
-    ]
-  }
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              "@babel/preset-env",
+              "@babel/react"
+            ]
+          }
+        }
+      }]
+    },
+    target: ["web", "es5"],
+    devtool: 'inline-source-map',
+    resolve: {
+      extensions: ['.js', '.jsx']
+    }
 };
